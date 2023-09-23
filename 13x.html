@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+
+</head>
+<body style="font-family:'lucida grande', tahoma, verdana, arial, sans-serif;background-color: #f7f7f7;color: #333;">
+
+<br>
+<input type="text" id="x3Factor" style="width:30px" value="1"> X<sup>3</sup> + <input type="text" id="x2Factor" style="width:30px" value="1"> X<sup>2</sup> + 
+<input type="text" id="x1Factor" style="width:30px" value="1"> X + <input type="text" id="factor" value=0 style="width:30px"> = 0
+<br>
+<br>
+
+Delta: <span id="delta">0</span><br><br>
+<span id="desc"></span><br>
+<span id="x1">0</span><br><br>
+<span id="x2">0</span><br><br>
+<span id="x3">0</span><br><br>
+
+<!-- <input type="submit" value="Submit" onclick="start()"> -->
+<input type="button" value="计算" onclick="start()" id="startBtn" />
+
+<script>
+var a = 1;
+var b = 1;
+var c = 1;
+var d = 0;
+var A;
+var B;
+var C;
+var delta;
+var x1, x2, x3;
+var x2_real, x3_real, x2_virtual, x3_virtual;
+var deltaQuadratic;
+
+function initParams () {
+    a = parseFloat(document.getElementById("x3Factor").value);
+    b = parseFloat(document.getElementById("x2Factor").value);
+    c = parseFloat(document.getElementById("x1Factor").value);
+    d = parseFloat(document.getElementById("factor").value);
+    A = b * b - 3 * a * c;
+    B = b * c - 9 * a * d;
+    C = c * c - 3 * b * d;
+    delta = B * B - 4 * A * C;
+}
+
+function start() {
+    initParams ();
+    if (d == 0) {
+        x3 = 0;
+        solveQuadraticEquation();
+    } else if (A == 0 && B == 0) {
+        x1 = -b / (3*a);
+        x2 = -c / b;
+        x3 = -3 * d / c;
+
+    } else if (delta > 0) {
+        Y1 = A * b + 3 * a * (-B + Math.sqrt(delta)) / 2;
+        Y2 = A * b + 3 * a * (-B - Math.sqrt(delta)) / 2;
+
+        x1 = (-b - (getCubeRoot(Y1) + getCubeRoot(Y2))) / (3 * a);
+        x3_real = x2_real = (-b + getCubeRoot(Y1)) / (3 * a);
+        x2_virtual = ((Math.sqrt(3) / 2) * (getCubeRoot(Y1) - getCubeRoot(Y2)) ) / (3 * a);
+        x3_virtual = -x2_virtual;
+    } else if (delta == 0) {
+        var K = B / A; //A != 0
+        x1 = -b / a + K;
+        x2 = x3 = -K / 2;
+    } else {
+        //delta < 0
+        var T = (2 * A * b - 3 * a * B) / (2 * Math.sqrt(A * A * A)); // A > 0, -1 < T < 1
+        var angle = Math.acos(T) / 3;
+        x1 = (-b - 2 * Math.sqrt(A) * Math.cos(angle)) / (3 * a);
+        x2 = (-b + Math.sqrt(A) * (Math.cos(angle) + Math.sqrt(3) * Math.sin(angle))) / (3 * a);
+        x3 = (-b + Math.sqrt(A) * (Math.cos(angle) - Math.sqrt(3) * Math.sin(angle))) / (3 * a);
+    }
+    displayResults();
+}
+
+function solveQuadraticEquation() {
+    deltaQuadratic = b * b - 4 * a * c;
+    if (deltaQuadratic == 0) {
+        x1 = x2 = -b / (2 * a);
+    } else if (deltaQuadratic > 0) {
+        x1 = (-b + Math.sqrt(deltaQuadratic)) / (2 * a);
+        x2 = (-b - Math.sqrt(deltaQuadratic)) / (2 * a);
+    } else {
+        x2_real = -b / (2 * a);
+        x2_virtual = Math.sqrt(-deltaQuadratic) / (2 * a);
+    }
+}
+
+function getCubeRoot(value) {
+    if (value < 0) {
+        return -Math.pow(-value, 1/3);
+    } else if (value == 0) {
+        return 0;
+    } else {
+        return Math.pow(value, 1/3);
+    }
+}
+
+function displayResults() {
+    document.getElementById("delta").innerHTML = "";
+    document.getElementById("x1").innerHTML = "";
+    document.getElementById("x2").innerHTML = "";
+    document.getElementById("x3").innerHTML = "";
+    document.getElementById("desc").innerHTML = "";
+    if (d == 0) {
+        document.getElementById("desc").innerHTML = "你在解一元二次方程哦。";
+        document.getElementById("x3").innerHTML = "x3 = " + x3;
+        document.getElementById("delta").innerHTML = deltaQuadratic;
+        if (deltaQuadratic >= 0) {
+            document.getElementById("x1").innerHTML = "x1 = " + x1;
+            document.getElementById("x2").innerHTML = "x2 = " + x2;
+        } else {
+            document.getElementById("x1").innerHTML = "x1 = " + x2_real + " + " + x2_virtual + "i";
+            document.getElementById("x2").innerHTML = "x2 = " + x2_real + " - " + x2_virtual + "i";
+        }
+        return;
+    }
+    if (A == 0 && B == 0) {
+        document.getElementById("x1").innerHTML = "x1 = x2 = x3 = " + x1;
+        document.getElementById("desc").innerHTML = "方程有一个三重实根";
+        return;
+    }
+    document.getElementById("delta").innerHTML = delta;
+    if (delta > 0) {
+        document.getElementById("x1").innerHTML = "x1 = " + x1;
+        document.getElementById("x2").innerHTML = "x2 = " + x2_real + " + " + x2_virtual + "i";
+        document.getElementById("x3").innerHTML = "x3 = " + x2_real + " - " + x2_virtual + "i";
+        document.getElementById("desc").innerHTML = "方程有一个实根和一对共轭虚根";
+    } else if (delta == 0) {
+        document.getElementById("x1").innerHTML = "x1 = " + x1;
+        document.getElementById("x2").innerHTML = "x2 = x3 = " + x2;
+        document.getElementById("desc").innerHTML = "方程有一个实根，其中有一个两重根";
+    } else {
+        document.getElementById("x1").innerHTML = "x1 = " + x1;
+        document.getElementById("x2").innerHTML = "x2 = " + x2;
+        document.getElementById("x3").innerHTML = "x3 = " + x3;
+        document.getElementById("desc").innerHTML = "方程有三个不相等的实根";
+    }
+}
+
+</script>
+<button onclick="javascript: window.location='index.html'">返回</button>
+</body>
+</html>

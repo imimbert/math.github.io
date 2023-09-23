@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> x 的算术平方根 </title>
+    </head>
+    <body>
+        <p id="sqrtx">此处显示结果</p>
+        此处输入被开方数：<input id="x">
+        <button onclick="sqrtx()">提交</button>
+        <script>
+            function sqrtx(){
+                document.getElementById('sqrtx').innerHTML=Math.sqrt(document.getElementById("x").value);
+            }
+        </script>
+        <button onclick="javascript: window.location='index.html'">返回</button>
+    </body>
+</html>

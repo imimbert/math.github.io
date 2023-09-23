@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> x 的 y 次方 </title>
+    </head>
+    <body>
+        <p id="xey">此处显示结果</p>
+        此处输入底数：<input id="x"></br>
+        此处输入指数：<input id="y">
+        <button onclick="xey()">提交</button>
+        <script>
+            function xey(){
+                document.getElementById('xey').innerHTML=Math.pow(document.getElementById("x").value,document.getElementById("y").value);
+            }
+        </script>
+        <button onclick="javascript: window.location='index.html'">返回</button>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> 计算一元二次方程 </title>
+    </head>
+    <body>
+        <p>计算形如 ax<sup>2</sup>+bx+c=0 的方程的根</p>
+        <p id="result">此处显示结果</p>
+        此处输入a:<input id="a"></br>
+        此处输入b:<input id="b"></br>
+        此处输入c:<input id="c">
+        <button onclick="x12()">提交</button>        
+        <script>
+            function x12(){
+                var a,b,c,disc,x1,x2,p,q;
+                a = document.getElementById("a").value;
+                b = document.getElementById("b").value;
+                c = document.getElementById("c").value;
+                disc=Math.pow(b,2)-4*a*c;
+                if(disc<0){
+                    document.getElementById("result").innerHTML = "无实根"
+                }else{
+                    p=-b/(2*a);
+                    q=Math.sqrt(disc)/(2*a);
+                    x1=p+q;
+                    x2=p-q;
+                    res = "两个根分别为："+x1+","+x2;
+                    document.getElementById("result").innerHTML = res;
+                }
+            }
+        </script>
+        <button onclick="javascript: window.location='index.html'">返回</button>
+    </body>
+</html>
