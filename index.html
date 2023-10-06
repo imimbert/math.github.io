@@ -1,14 +1,66 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title> Tools </title>
-    </head>
-    <body>
-        <p>数学计算工具</p>
-        <button onclick="javascript: window.location='12x.html'">计算一元二次方程</button>
-        <button onclick="javascript: window.location='13x.html'">计算一元三次方程</button>
-        <button onclick="javascript: window.location='sqrtx.html'">计算x的算术平方根</button>
-        <button onclick="javascript: window.location='xey.html'">计算x的y次方</button>
-        </script>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .test {
+            float: left;
+            width: 25%;
+            box-sizing: border-box;
+            padding: 10px;
+            min-width: 150px;
+            border-color: black;
+        }
+        .container {
+            width: 100%;
+        }
+        @media (max-width:615px) {
+            .test {
+                float: left;
+                width: 33%;
+                box-sizing: border-box;
+                padding: 10px;
+                min-width: 150px;
+            }
+        }
+        @media (max-width:465px) {
+            .test {
+                float: left;
+                width: 50%;
+                box-sizing: border-box;
+                padding: 10px;
+                min-width: 150px;
+            }
+            }
+        @media (max-width:315px) {
+            .test {
+                float: left;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="test">
+            <a href="12x.html">计算一元二次方程</a>
+        </div>
+        <div class="test">
+            <a href="13x.html">计算一元三次方程</a>
+        </div>
+        <div class="test">
+            <a href="sqrtx.html">计算x的算术平方根</a>
+        </div>
+        <div class="test">
+            <a href="xey.html">计算x的y次方</a>
+        </div>
+        <div class="test">
+            <a href="function.html">绘制函数图像</a>
+        </div>
+    </div>
+</body>
 </html>
